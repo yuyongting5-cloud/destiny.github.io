@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All About Desity</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    body { 
+      font-family: Georgia, serif; 
+      background: #0a0a0a; 
+      color: #f1f1f1; 
+    }
+    .hero {
+      height: 100vh;
+      background-image: url('https://i.ibb.co/pBD1pmHZ/IMG-7541.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .overlay {
+      background: rgba(5, 5, 5, 0.78);
+      padding: 4.5rem 3rem;
+      max-width: 720px;
+      border-radius: 24px;
+    }
+    .section-title {
+      font-size: 2.75rem;
+      line-height: 1.1;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+    }
+    .vinyl {
+      transition: all 0.4s ease;
+    }
+    .vinyl:hover {
+      transform: scale(1.08) rotate(8deg);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 主页 Hero -->
+  <section class="hero flex items-center">
+    <div class="max-w-5xl mx-auto px-8 relative z-10">
+      <div class="overlay">
+        <h1 class="text-6xl md:text-7xl font-light tracking-tighter mb-10">All About Desity</h1>
+        
+        <div class="text-2xl leading-tight mb-12">
+          祝福你無論身在何處，<br>
+          都是完全的自己，<br>
+          也因此，不必流浪。<br>
+          平安，圓滿。
+        </div>
+
+        <div class="border-l-2 border-amber-300 pl-6 mb-12">
+          <p class="text-xl mb-4">分享陳綺貞 〈雨水一盒 (A Box of Rain)〉</p>
+          <a href="https://163cn.tv/3XEtfJR" target="_blank" 
+             class="mt-6 inline-flex items-center gap-3 px-8 py-4 border border-white/50 hover:border-amber-300 rounded-full text-sm tracking-widest">
+            → 在网易云音乐完整聆听
+          </a>
+        </div>
+
+        <button onclick="document.getElementById('music-wall').scrollIntoView({behavior:'smooth'})" 
+                class="px-10 py-5 border border-white/60 hover:bg-white/10 rounded-full text-sm tracking-widest">
+          進入我的音樂牆 →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 音樂牆（竖向唱片墙，可滑动） -->
+  <section id="music-wall" class="py-24 bg-zinc-950">
+    <div class="max-w-4xl mx-auto px-8">
+      <h2 class="section-title mb-16">音樂牆</h2>
+      <div class="swiper vertical-swiper h-[520px] overflow-hidden">
+        <div class="swiper-wrapper" id="vinyl-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 個人記錄 -->
+  <section class="py-24 bg-black">
+    <div class="max-w-3xl mx-auto px-8">
+      <h2 class="section-title mb-12">個人記錄</h2>
+      <div class="space-y-12 text-zinc-300">
+        <div class="border-l border-zinc-700 pl-8">
+          <p class="text-lg">在这里写你的经历、故事或重要时刻……</p>
+          <p class="text-xs text-zinc-500 mt-4">日期 / 地点</p>
+        </div>
+        <!-- 复制上面整个 <div>...</div> 来添加新条目 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 個人情感分享 -->
+  <section class="py-24 bg-zinc-950">
+    <div class="max-w-3xl mx-auto px-8">
+      <h2 class="section-title mb-12">個人情感分享</h2>
+      <div class="space-y-12 text-zinc-300">
+        <div class="border-l border-zinc-700 pl-8">
+          <p class="text-lg">在这里分享你对音乐、情感、生活的感悟……</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 心情記錄 -->
+  <section class="py-24 bg-black">
+    <div class="max-w-3xl mx-auto px-8">
+      <h2 class="section-title mb-12">心情記錄</h2>
+      <div class="bg-zinc-900 p-10 rounded-3xl">
+        <textarea id="mood-input" rows="4" class="w-full bg-transparent border border-zinc-700 rounded-2xl p-6 text-lg placeholder-zinc-500" 
+                  placeholder="今天的心情、想说的话..."></textarea>
+        <button onclick="saveMood()" class="mt-6 px-10 py-4 bg-zinc-800 hover:bg-zinc-700 rounded-full">記錄這一刻</button>
+      </div>
+      <div id="mood-history" class="mt-12 space-y-8"></div>
+    </div>
+  </section>
+
+  <!-- 閱讀摘抄 -->
+  <section class="py-24 bg-zinc-950">
+    <div class="max-w-3xl mx-auto px-8">
+      <h2 class="section-title mb-12">閱讀摘抄</h2>
+      <div class="space-y-12">
+        <div class="border-l-4 border-amber-300 pl-8">
+          <p class="italic text-2xl">"在这里粘贴书中的摘抄句子……"</p>
+          <p class="mt-6 text-sm text-zinc-400">- 书名 / 作者</p>
+          <p class="mt-4 text-zinc-500">你的感悟或想法</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-20 text-center text-xs text-zinc-500 border-t border-zinc-800">
+    All About Desity • 在雨水與吉他聲中，成為完全的自己
+  </footer>
+
+  <script>
+    // 示例唱片数据（后面你可以轻松添加更多）
+    let vinyls = [
+      { title: "雨水一盒", artist: "陳綺貞", cover: "https://picsum.photos/id/201/400/400" },
+      { title: "另一首", artist: "張懸", cover: "https://picsum.photos/id/301/400/400" }
+    ];
+
+    function initVinylWall() {
+      const container = document.getElementById('vinyl-list');
+      container.innerHTML = vinyls.map((v, i) => `
+        <div class="swiper-slide flex justify-center py-4">
+          <div onclick="playVinyl(${i})" class="vinyl w-64 cursor-pointer">
+            <img src="${v.cover}" class="w-full aspect-square object-cover rounded-2xl shadow-2xl border border-zinc-700">
+            <div class="mt-4 text-center">
+              <p class="font-medium">${v.title}</p>
+              <p class="text-sm text-zinc-500">${v.artist}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      new Swiper('.vertical-swiper', {
+        direction: 'vertical',
+        slidesPerView: 1.8,
+        centeredSlides: true,
+        spaceBetween: 30,
+        loop: true,
+      });
+    }
+
+    function playVinyl(i) {
+      console.log('点击了唱片：' + vinyls[i].title);
+      // 滑动音效（轻微弦音）
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = 220;
+        osc.connect(ctx.destination);
+        osc.start();
+        setTimeout(() => osc.stop(), 80);
+      } catch(e) {}
+    }
+
+    // 心情记录功能
+    function saveMood() {
+      const input = document.getElementById('mood-input').value.trim();
+      if (!input) return;
+      let moods = JSON.parse(localStorage.getItem('moods') || '[]');
+      moods.unshift({ text: input, time: new Date().toLocaleString('zh-CN') });
+      localStorage.setItem('moods', JSON.stringify(moods));
+      document.getElementById('mood-input').value = '';
+      renderMoods();
+    }
+
+    function renderMoods() {
+      const container = document.getElementById('mood-history');
+      let moods = JSON.parse(localStorage.getItem('moods') || '[]');
+      container.innerHTML = moods.map(m => `
+        <div class="border-l border-zinc-700 pl-8">
+          <p class="text-lg">${m.text}</p>
+          <p class="text-xs text-zinc-500 mt-3">${m.time}</p>
+        </div>
+      `).join('');
+    }
+
+    window.onload = () => {
+      initVinylWall();
+      renderMoods();
+    };
+  </script>
+</body>
+</html>
