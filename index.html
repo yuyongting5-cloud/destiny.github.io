@@ -3,27 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All About Destiny</title>
+  <title>All About Destiny | Archive</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;500&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #fff; color: #000; font-family: 'Noto Serif SC', serif; overflow-x: hidden; }
-    .hero-title { font-weight: 200; letter-spacing: -0.02em; font-size: clamp(3rem, 12vw, 9rem); line-height: 0.9; }
-    /* 模拟参考图中的大星星 */
-    .star-outline {
-      position: absolute;
-      top: 15%;
-      left: 30%;
-      width: 50vw;
-      opacity: 0.1;
-      z-index: -1;
-      pointer-events: none;
-    }
-    .album-card { transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); filter: grayscale(100%); opacity: 0.4; }
-    .swiper-slide-active .album-card { filter: grayscale(0%); opacity: 1; transform: scale(1.05); }
-    .text-vertical { writing-mode: vertical-rl; }
+    :root { --main-bg: #fff; --main-text: #000; }
+    body { background-color: var(--main-bg); color: var(--main-text); font-family: 'Noto Serif SC', serif; overflow-x: hidden; scroll-behavior: smooth; }
+    
+    /* 首页大标题样式 */
+    .hero-title { font-weight: 200; letter-spacing: -0.02em; font-size: clamp(3rem, 12vw, 9rem); line-height: 0.9; z-index: 10; }
+    
+    /* 星星背景控制 */
+    .star-outline { position: absolute; top: 10%; left: 20%; width: 60vw; opacity: 0.07; z-index: -1; pointer-events: none; }
+
+    /* 唱片墙：纵向排列与右侧信息流 */
+    .album-vertical-list { height: 500px; overflow-y: auto; scrollbar-width: none; }
+    .album-vertical-list::-webkit-scrollbar { display: none; }
+    .album-item { cursor: pointer; transition: 0.4s; filter: grayscale(100%); opacity: 0.3; margin-bottom: 20px; }
+    .album-item.active { filter: grayscale(0%); opacity: 1; transform: translateX(20px); }
+
+    /* 碎片随机排版区 */
+    .scrapbook-container { position: relative; min-height: 120vh; width: 100%; }
+    .scrap-item { position: absolute; transition: transform 0.3s; cursor: move; }
+    .scrap-item:hover { z-index: 50; transform: scale(1.02); }
+
+    /* 艺术字排版：最后一段歌词 */
+    .lyric-art-block span { display: inline-block; transition: all 0.3s; }
+    .lyric-art-block span:nth-child(even) { font-family: serif; font-style: italic; font-size: 1.4em; transform: translateY(10px); }
+    .lyric-art-block span:nth-child(3n) { font-weight: 900; letter-spacing: 0.2em; font-size: 0.8em; opacity: 0.5; }
+
+    /* 弹窗样式 */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 1000; align-items: center; justify-content: center; padding: 40px; }
+    .modal-content { width: 100%; max-width: 500px; }
+    textarea { width: 100%; height: 200px; background: transparent; border-bottom: 1px solid #000; font-size: 1.2rem; outline: none; padding: 10px 0; resize: none; }
+
+    /* 留言卡片 */
+    .wish-card { border: 1px solid #eee; padding: 20px; margin-bottom: 15px; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -32,97 +50,166 @@
     <path d="M256 40l61 168h175L350 312l54 160-148-98-148 98 54-160L20 208h175z"/>
   </svg>
 
-  <nav class="p-10 flex justify-between items-start text-[10px] tracking-[0.5em] uppercase">
-    <div>Yuyongting / 2026</div>
-    <div class="text-right">Fragments<br>Soundtrack<br>Identity</div>
-  </nav>
-
-  <header class="min-h-[70vh] flex flex-col justify-end px-10 md:px-24 pb-20">
-    <h1 class="hero-title">ALL ABOUT<br>DESTINY.</h1>
-    <p class="mt-10 text-xs italic tracking-widest opacity-40">"one thing i can tell you is you got to be free"</p>
-  </header>
-
-  <section class="py-40">
-    <div class="swiper album-swiper overflow-visible px-10">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide w-[280px] md:w-[400px]">
-          <div class="album-card">
-            <img src="https://i.ibb.co/7dM4QCx4/IMG-6823.jpg" class="w-full shadow-sm">
-            <p class="mt-4 text-[9px] tracking-widest uppercase">Mineral / EndSerenading</p>
-          </div>
-        </div>
-        <div class="swiper-slide w-[280px] md:w-[400px]">
-          <div class="album-card">
-            <img src="https://i.ibb.co/pB7Wvb7D/IMG-6824.jpg" class="w-full shadow-sm">
-            <p class="mt-4 text-[9px] tracking-widest uppercase">透明杂志 / 我们的灵魂乐</p>
-          </div>
-        </div>
-        <div class="swiper-slide w-[280px] md:w-[400px]">
-          <div class="album-card">
-            <img src="https://i.ibb.co/pBHns4Yd/IMG-6821.jpg" class="w-full shadow-sm">
-            <p class="mt-4 text-[9px] tracking-widest uppercase">张悬 / 亲爱的…</p>
-          </div>
-        </div>
-        <div class="swiper-slide w-[280px] md:w-[400px]">
-          <div class="album-card">
-            <img src="https://i.ibb.co/whDZddfZ/IMG-6822.jpg" class="w-full shadow-sm">
-            <p class="mt-4 text-[9px] tracking-widest uppercase">陈绮贞 / 时间的歌</p>
-          </div>
-        </div>
-        <div class="swiper-slide w-[280px] md:w-[400px]">
-          <div class="album-card">
-            <img src="https://i.ibb.co/4nC6wM7G/IMG-6828.jpg" class="w-full shadow-sm">
-            <p class="mt-4 text-[9px] tracking-widest uppercase">薄荷叶 / 的士房间</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="px-10 md:px-24 py-40 space-y-64">
-    <div class="flex flex-col md:flex-row gap-20 items-start">
-      <div class="w-full md:w-1/2">
-        <img src="https://i.ibb.co/n8f7K4Zf/fxn-2025-12-23-175902-319.jpg" class="w-full grayscale shadow-2xl">
-      </div>
-      <div class="pt-10">
-        <p class="text-xl md:text-2xl leading-relaxed font-light">
-          每次出门都幻想自己会阅读。<br>
-          每次都带着书出门带着没电的手机和没翻来的书回去。好吧。
-        </p>
-      </div>
-    </div>
-
-    <div class="flex justify-end">
-      <p class="text-4xl md:text-7xl font-bold leading-tight text-right">
-        这个世界在<br>十七岁就毁灭了
+  <header class="min-h-screen flex flex-col md:flex-row items-center justify-center px-10 md:px-24">
+    <div class="flex-1">
+      <h1 class="hero-title">ALL ABOUT<br>DESTINY.</h1>
+      <p class="mt-12 text-2xl md:text-3xl italic tracking-tighter opacity-70">
+        "one thing i can tell you is you got to be free"
       </p>
     </div>
+    <div class="flex-1 flex justify-center md:justify-end md:-ml-32 mt-10 md:mt-0">
+      <img src="https://i.ibb.co/m58hqtc6/IMG-6823.jpg" class="w-64 md:w-80 shadow-2xl rotate-2">
+    </div>
+  </header>
 
-    <div class="flex flex-col md:flex-row-reverse gap-20">
-      <div class="w-full md:w-1/2">
-        <img src="https://i.ibb.co/XrQZCfSR/IMG-4029.jpg" class="w-full grayscale">
+  <section class="py-40 px-10 md:px-24 flex flex-col md:flex-row gap-20">
+    <div class="w-full md:w-1/3 album-vertical-list" id="albumList">
       </div>
-      <div class="self-end">
-        <p class="text-xl italic opacity-50">"I'm trying to go on this path<br>But you say I haven't get the jests"</p>
+    <div class="flex-1 border-l border-black/10 pl-10 flex flex-col justify-center">
+      <div id="albumDetail" class="opacity-0 transition-opacity duration-500">
+        <h3 id="detailTitle" class="text-4xl font-bold mb-6">Select an Album</h3>
+        <div id="detailSongs" class="text-sm opacity-40 leading-loose mb-10"></div>
+        <div class="bg-black/5 p-6 relative">
+          <p id="detailLyric" class="italic text-xl">"点击专辑查看歌词摘抄"</p>
+          <button onclick="openModal('lyric')" class="absolute top-2 right-2 text-[10px] opacity-20 hover:opacity-100 uppercase underline">Edit</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer class="py-64 px-10 text-center">
-    <p class="max-w-2xl mx-auto text-sm leading-loose opacity-30 italic">
-      Time doesn't always heal, it just breathes and swallows memories Like the seasons change Sending showers, beating flowers into the mud.
-    </p>
-    <div class="mt-40 text-[9px] tracking-[0.8em] uppercase">Built for the Unseen / 2026</div>
+  <section class="scrapbook-container" id="scrapbook" title="双击空白处添加心情或照片">
+    <div class="scrap-item" style="top:10%; left:10%; width:300px;">
+      <p class="text-xl font-light">每次出门都幻想自己会阅读。每次都带着书出门带着没电的手机和没翻过的书回去。好吧</p>
+    </div>
+    <div class="scrap-item" style="top:25%; right:15%;">
+      <img src="https://i.ibb.co/n8f7K4Zf/fxn-2025-12-23-175902-319.jpg" class="w-64 grayscale hover:grayscale-0 transition-all">
+    </div>
+    <div class="scrap-item" style="bottom:20%; left:20%;">
+      <h2 class="text-5xl md:text-8xl font-bold">这个世界在十七岁就毁灭了</h2>
+    </div>
+    <div class="scrap-item" style="top:50%; left:45%;">
+      <p class="italic opacity-50 text-2xl">"I'm trying to go on this path<br>But you say I haven't get the jests"</p>
+    </div>
+    <div class="scrap-item" style="bottom:10%; right:10%;">
+      <img src="https://i.ibb.co/XrQZCfSR/IMG-4029.jpg" class="w-72">
+      <p class="text-right mt-2 text-xs">每一天、我和自己见面</p>
+    </div>
+  </section>
+
+  <footer class="min-h-screen py-40 px-10 text-center flex flex-col items-center justify-between">
+    <div class="lyric-art-block max-w-4xl text-2xl md:text-5xl leading-relaxed cursor-default" id="artLyric">
+      </div>
+
+    <div class="w-full max-w-2xl mt-40">
+      <div class="flex justify-between items-end mb-10 border-b border-black pb-2">
+        <span class="text-4xl font-bold tracking-tighter">I WISH</span>
+        <button onclick="openModal('wish')" class="text-xs uppercase tracking-widest underline">Leave a Message</button>
+      </div>
+      <div id="wishContainer" class="text-left">
+        </div>
+    </div>
+    
+    <div class="mt-40 text-[9px] tracking-[0.8em] uppercase opacity-20">Built for the Unseen / 2026</div>
   </footer>
 
+  <div id="globalModal" class="modal">
+    <div class="modal-content">
+      <h4 id="modalType" class="text-[10px] uppercase tracking-widest mb-6 opacity-30">Write something</h4>
+      <textarea id="modalInput" placeholder="在此输入..."></textarea>
+      <div class="flex justify-end gap-6 mt-6">
+        <button onclick="closeModal()" class="text-xs uppercase">Cancel</button>
+        <button onclick="saveContent()" class="text-xs uppercase font-bold">Save</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    new Swiper('.album-swiper', {
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      spaceBetween: 60,
-      loop: true,
-      mousewheel: { forceToAxis: true }
+    // 1. 唱片数据
+    const albums = [
+      { id:1, name: 'Mineral / EndSerenading', img: 'https://i.ibb.co/7dM4QCx4/IMG-6823.jpg', songs: '01. Love Letter / 02. Palisade / 03. Gjs', lyric: 'I will always be your favorite ghost.' },
+      { id:2, name: '透明杂志 / 我们的灵魂乐', img: 'https://i.ibb.co/pB7Wvb7D/IMG-6824.jpg', songs: '01. 永远的等待 / 02. 少女 / 03. 我们的灵魂乐', lyric: '去更远的地方，去没有人的地方。' },
+      { id:3, name: '张悬 / 亲爱的…', img: 'https://i.ibb.co/pBHns4Yd/IMG-6821.jpg', songs: '01. 关于我爱你 / 02. 信任的样子 / 03. 并不', lyric: '深深的话要浅浅地说。' }
+    ];
+
+    // 初始化唱片列表
+    const listEl = document.getElementById('albumList');
+    albums.forEach((alb, idx) => {
+      const div = document.createElement('div');
+      div.className = `album-item ${idx===0?'active':''}`;
+      div.innerHTML = `<img src="${alb.img}" class="w-full shadow-lg"><p class="text-[9px] mt-2 uppercase tracking-widest">${alb.name}</p>`;
+      div.onclick = () => switchAlbum(alb, div);
+      listEl.appendChild(div);
     });
+
+    function switchAlbum(alb, el) {
+      document.querySelectorAll('.album-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      const detail = document.getElementById('albumDetail');
+      detail.style.opacity = 0;
+      setTimeout(() => {
+        document.getElementById('detailTitle').innerText = alb.name;
+        document.getElementById('detailSongs').innerText = alb.songs;
+        document.getElementById('detailLyric').innerText = `"${alb.lyric}"`;
+        detail.style.opacity = 1;
+      }, 500);
+    }
+
+    // 2. 艺术字歌词生成
+    const fullLyric = "Time doesn't always heal, it just breathes and swallows memories Like the seasons change Sending showers, beating flowers into the mud";
+    const artContainer = document.getElementById('artLyric');
+    fullLyric.split(' ').forEach(word => {
+      const span = document.createElement('span');
+      span.innerText = word + ' ';
+      span.style.marginRight = Math.random() * 20 + 'px';
+      artContainer.appendChild(span);
+    });
+
+    // 3. 弹窗与留言系统
+    let currentMode = '';
+    const nicks = ['Velvet', 'Blue', 'Echo', 'Neon', 'Silent', 'Wild'];
+    const roles = ['Dreamer', 'Ghost', 'Poet', 'Soul', 'Shadow'];
+
+    function openModal(mode) {
+      currentMode = mode;
+      document.getElementById('modalType').innerText = mode === 'wish' ? 'I Wish...' : 'Edit Lyric';
+      document.getElementById('globalModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('globalModal').style.display = 'none';
+      document.getElementById('modalInput').value = '';
+    }
+
+    function saveContent() {
+      const val = document.getElementById('modalInput').value;
+      if(!val) return;
+
+      if(currentMode === 'wish') {
+        const name = nicks[Math.floor(Math.random()*nicks.length)] + ' ' + roles[Math.floor(Math.random()*roles.length)];
+        const time = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const card = document.createElement('div');
+        card.className = 'wish-card';
+        card.innerHTML = `<p class="text-sm leading-relaxed">${val}</p><div class="mt-4 text-[9px] opacity-30 uppercase tracking-widest">@${name} — ${time}</div>`;
+        document.getElementById('wishContainer').prepend(card);
+      } else if(currentMode === 'lyric') {
+        document.getElementById('detailLyric').innerText = `"${val}"`;
+      }
+      closeModal();
+    }
+
+    // 4. 双击空白处添加随机碎片
+    document.getElementById('scrapbook').ondblclick = (e) => {
+      if(e.target.id !== 'scrapbook') return;
+      const text = prompt("想要在这个位置留下什么文字？");
+      if(text) {
+        const div = document.createElement('div');
+        div.className = 'scrap-item bg-white/80 backdrop-blur p-4 border border-black/5 shadow-xl';
+        div.style.left = e.pageX + 'px';
+        div.style.top = e.pageY + 'px';
+        div.innerHTML = `<p class="text-lg">${text}</p>`;
+        document.getElementById('scrapbook').appendChild(div);
+      }
+    };
   </script>
 </body>
 </html>
